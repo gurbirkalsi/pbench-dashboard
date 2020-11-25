@@ -1,0 +1,3 @@
+Checking minimum requirements...
+FAIL: Expected minimum Docker version to be 19.03.6 but found 
+Error response from daemon: dial unix docker.raw.sock: connect: connection refused

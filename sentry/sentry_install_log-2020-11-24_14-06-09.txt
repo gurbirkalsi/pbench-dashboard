@@ -1,0 +1,723 @@
+Checking minimum requirements...
+
+Creating volumes for persistent storage...
+Created sentry-data.
+Created sentry-postgres.
+Created sentry-redis.
+Created sentry-zookeeper.
+Created sentry-kafka.
+Created sentry-clickhouse.
+Created sentry-symbolicator.
+
+Creating sentry/sentry.conf.py...
+Creating sentry/config.yml...
+Creating sentry/requirements.txt...
+Creating symbolicator/config.yml...
+Creating relay/config.yml...
+
+Generating secret key...
+Secret key written to sentry/config.yml
+
+Fetching and updating Docker images...
+
+Some service image(s) must be built from source by running:
+    docker-compose build symbolicator-cleanup post-process-forwarder cron web sentry-cleanup snuba-cleanup subscription-consumer-transactions subscription-consumer-events ingest-consumer worker
+nightly: Pulling from getsentry/sentry
+8d691f585fa8: Pulling fs layer
+3fd6980f9df6: Pulling fs layer
+c4f890363b98: Pulling fs layer
+b8cfb9853b0a: Pulling fs layer
+d9679bdf767f: Pulling fs layer
+ce7ffe138aa5: Pulling fs layer
+aa4e2a4875e5: Pulling fs layer
+d9679bdf767f: Waiting
+ce7ffe138aa5: Waiting
+aa4e2a4875e5: Waiting
+b8cfb9853b0a: Waiting
+4ff38bbe7d9c: Pulling fs layer
+d63a71f9e499: Pulling fs layer
+f9adb8d6768b: Pulling fs layer
+cc7945783afb: Pulling fs layer
+9b43fd267cd2: Pulling fs layer
+c931e09f3013: Pulling fs layer
+67c2f9754591: Pulling fs layer
+4ff38bbe7d9c: Waiting
+d63a71f9e499: Waiting
+f9adb8d6768b: Waiting
+cc7945783afb: Waiting
+c931e09f3013: Waiting
+9b43fd267cd2: Waiting
+67c2f9754591: Waiting
+3fd6980f9df6: Verifying Checksum
+3fd6980f9df6: Download complete
+c4f890363b98: Verifying Checksum
+c4f890363b98: Download complete
+b8cfb9853b0a: Verifying Checksum
+b8cfb9853b0a: Download complete
+d9679bdf767f: Download complete
+ce7ffe138aa5: Verifying Checksum
+ce7ffe138aa5: Download complete
+aa4e2a4875e5: Download complete
+8d691f585fa8: Verifying Checksum
+8d691f585fa8: Download complete
+8d691f585fa8: Pull complete
+d63a71f9e499: Download complete
+cc7945783afb: Download complete
+3fd6980f9df6: Pull complete
+9b43fd267cd2: Verifying Checksum
+9b43fd267cd2: Download complete
+c931e09f3013: Verifying Checksum
+c931e09f3013: Download complete
+f9adb8d6768b: Verifying Checksum
+f9adb8d6768b: Download complete
+67c2f9754591: Verifying Checksum
+67c2f9754591: Download complete
+c4f890363b98: Pull complete
+b8cfb9853b0a: Pull complete
+d9679bdf767f: Pull complete
+ce7ffe138aa5: Pull complete
+aa4e2a4875e5: Pull complete
+4ff38bbe7d9c: Verifying Checksum
+4ff38bbe7d9c: Download complete
+4ff38bbe7d9c: Pull complete
+d63a71f9e499: Pull complete
+f9adb8d6768b: Pull complete
+cc7945783afb: Pull complete
+9b43fd267cd2: Pull complete
+c931e09f3013: Pull complete
+67c2f9754591: Pull complete
+Digest: sha256:c033f378a7280efd521ebd38fa3b8325b035d59e293c6c388c3e965024b68687
+Status: Downloaded newer image for getsentry/sentry:nightly
+docker.io/getsentry/sentry:nightly
+
+Building and tagging Docker images...
+
+Building web
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Running in b89ed9a4f594
+[91m/usr/local/lib/python2.7/site-packages/OpenSSL/crypto.py:12: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in a future release.
+  from cryptography import x509
+[0m[91mDEPRECATION: Python 2.7 will reach the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 won't be maintained after that date. A future version of pip will drop support for Python 2.7. More details about Python 2 support in pip, can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support
+[0mRemoving intermediate container b89ed9a4f594
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+smtp uses an image, skipping
+memcached uses an image, skipping
+redis uses an image, skipping
+postgres uses an image, skipping
+zookeeper uses an image, skipping
+kafka uses an image, skipping
+clickhouse uses an image, skipping
+snuba-api uses an image, skipping
+snuba-consumer uses an image, skipping
+snuba-outcomes-consumer uses an image, skipping
+snuba-sessions-consumer uses an image, skipping
+snuba-transactions-consumer uses an image, skipping
+snuba-replacer uses an image, skipping
+snuba-subscription-consumer-events uses an image, skipping
+snuba-subscription-consumer-transactions uses an image, skipping
+symbolicator uses an image, skipping
+relay uses an image, skipping
+nginx uses an image, skipping
+Building snuba-cleanup                      ... 
+Building symbolicator-cleanup               ... 
+Building web                                ... 
+Building cron                               ... 
+Building worker                             ... 
+Building ingest-consumer                    ... 
+Building post-process-forwarder             ... 
+Building subscription-consumer-events       ... 
+Building subscription-consumer-transactions ... 
+Building sentry-cleanup                     ... 
+Building snuba-cleanup
+Building cron
+Building ingest-consumer
+Building subscription-consumer-transactions
+Building subscription-consumer-events
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Building ingest-consumer                    ... done
+Successfully built 52d38bb75f1e
+Building sentry-cleanup
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+Building subscription-consumer-events       ... done
+Building post-process-forwarder
+Successfully tagged sentry-onpremise-local:latest
+Building subscription-consumer-transactions ... done
+Building worker
+Step 1/5 : ARG BASE_IMAGE
+Step 2/5 : FROM ${BASE_IMAGE}
+ ---> d6bf9be19c87
+Step 3/5 : RUN apt-get update && apt-get install -y --no-install-recommends cron &&     rm -r /var/lib/apt/lists/*
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+Building web
+Building cron                               ... done
+ ---> Running in 5363760b6d5a
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+Step 1/5 : ARG BASE_IMAGE
+Step 2/5 : FROM ${BASE_IMAGE}
+ ---> 52d38bb75f1e
+Step 3/5 : RUN apt-get update && apt-get install -y --no-install-recommends cron &&     rm -r /var/lib/apt/lists/*
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+Building post-process-forwarder             ... done
+Building symbolicator-cleanup
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Step 1/5 : ARG SENTRY_IMAGE
+Step 2/5 : ARG SENTRY_PYTHON3
+Step 3/5 : FROM ${SENTRY_IMAGE}${SENTRY_PYTHON3:+-py3}
+ ---> dcb8df6ec911
+Step 4/5 : COPY . /usr/src/sentry
+Successfully tagged sentry-onpremise-local:latest
+Building worker                             ... done
+ ---> Using cache
+ ---> 5db0203066cd
+Step 5/5 : RUN if [ -s /usr/src/sentry/requirements.txt ]; then pip install -r /usr/src/sentry/requirements.txt; fi
+ ---> Using cache
+ ---> 52d38bb75f1e
+
+Successfully built 52d38bb75f1e
+Successfully tagged sentry-onpremise-local:latest
+Building web                                ... done
+ ---> Running in 6596d55b4a8a
+Step 1/5 : ARG BASE_IMAGE
+Step 2/5 : FROM ${BASE_IMAGE}
+ ---> 27c4691d8a48
+Step 3/5 : RUN apt-get update && apt-get install -y --no-install-recommends cron &&     rm -r /var/lib/apt/lists/*
+ ---> Running in 11e55c2cdbdd
+Get:1 http://deb.debian.org/debian buster InRelease [121 kB]
+Get:1 http://deb.debian.org/debian buster InRelease [121 kB]
+Get:2 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
+Get:2 http://security.debian.org/debian-security buster/updates InRelease [65.4 kB]
+Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
+Get:1 http://security.debian.org/debian-security stretch/updates InRelease [53.0 kB]
+Ign:2 http://deb.debian.org/debian stretch InRelease
+Get:3 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]
+Get:3 http://deb.debian.org/debian stretch-updates InRelease [93.6 kB]
+Get:4 http://deb.debian.org/debian stretch Release [118 kB]
+Get:5 http://deb.debian.org/debian stretch Release.gpg [2410 B]
+Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [251 kB]
+Get:4 http://security.debian.org/debian-security buster/updates/main amd64 Packages [251 kB]
+Get:6 http://security.debian.org/debian-security stretch/updates/main amd64 Packages [627 kB]
+Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7906 kB]
+Get:7 http://deb.debian.org/debian stretch-updates/main amd64 Packages [2596 B]
+Get:5 http://deb.debian.org/debian buster/main amd64 Packages [7906 kB]
+Get:8 http://deb.debian.org/debian stretch/main amd64 Packages [7080 kB]
+Fetched 7976 kB in 2s (2788 kB/s)
+Reading package lists...Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7856 B]
+Get:6 http://deb.debian.org/debian buster-updates/main amd64 Packages [7856 B]
+
+Reading package lists...Fetched 8404 kB in 5s (1751 kB/s)
+Reading package lists...Fetched 8404 kB in 5s (1767 kB/s)
+Reading package lists...
+Building dependency tree...
+Reading state information...
+Suggested packages:
+  anacron logrotate checksecurity
+Recommended packages:
+  exim4 | postfix | mail-transport-agent
+The following NEW packages will be installed:
+  cron
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 95.4 kB of archives.
+After this operation, 257 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian stretch/main amd64 cron amd64 3.0pl1-128+deb9u1 [95.4 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 95.4 kB in 0s (1389 kB/s)
+Selecting previously unselected package cron.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%
+(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%
+(Reading database ... 100%(Reading database ... 6661 files and directories currently installed.)
+Preparing to unpack .../cron_3.0pl1-128+deb9u1_amd64.deb ...
+Unpacking cron (3.0pl1-128+deb9u1) ...
+Reading package lists...Reading package lists...Setting up cron (3.0pl1-128+deb9u1) ...
+Adding group `crontab' (GID 101) ...
+Done.
+update-rc.d: warning: start and stop actions are no longer supported; falling back to defaults
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Removing intermediate container 11e55c2cdbdd
+ ---> 1d6527f36aa2
+Step 4/5 : COPY entrypoint.sh /entrypoint.sh
+ ---> 78f28449143f
+Step 5/5 : ENTRYPOINT ["/entrypoint.sh"]
+
+ ---> Running in dff04a645500
+Building dependency tree...
+Building dependency tree...Removing intermediate container dff04a645500
+ ---> 75a292f8dd54
+
+Successfully built 75a292f8dd54
+Successfully tagged symbolicator-cleanup-onpremise-local:latest
+Building symbolicator-cleanup               ... done
+
+Reading state information...
+
+Reading state information...
+The following additional packages will be installed:
+  lsb-base sensible-utils
+Suggested packages:
+  anacron logrotate checksecurity
+Recommended packages:
+  default-mta | mail-transport-agent
+The following additional packages will be installed:
+  lsb-base sensible-utils
+Suggested packages:
+  anacron logrotate checksecurity
+Recommended packages:
+  default-mta | mail-transport-agent
+The following NEW packages will be installed:
+  cron lsb-base sensible-utils
+The following NEW packages will be installed:
+  cron lsb-base sensible-utils
+0 upgraded, 3 newly installed, 0 to remove and 16 not upgraded.
+Need to get 143 kB of archives.
+After this operation, 383 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian buster/main amd64 sensible-utils all 0.0.12 [15.8 kB]
+Get:2 http://deb.debian.org/debian buster/main amd64 lsb-base all 10.2019051400 [28.4 kB]
+Get:3 http://deb.debian.org/debian buster/main amd64 cron amd64 3.0pl1-134+deb10u1 [99.0 kB]
+0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+Need to get 143 kB of archives.
+After this operation, 383 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian buster/main amd64 sensible-utils all 0.0.12 [15.8 kB]
+Get:2 http://deb.debian.org/debian buster/main amd64 lsb-base all 10.2019051400 [28.4 kB]
+Get:3 http://deb.debian.org/debian buster/main amd64 cron amd64 3.0pl1-134+deb10u1 [99.0 kB]
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mFetched 143 kB in 0s (1733 kB/s)
+Selecting previously unselected package sensible-utils.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 11918 files and directories currently installed.)
+Preparing to unpack .../sensible-utils_0.0.12_all.deb ...
+Unpacking sensible-utils (0.0.12) ...
+[91mdebconf: delaying package configuration, since apt-utils is not installed
+[0mSelecting previously unselected package lsb-base.
+Preparing to unpack .../lsb-base_10.2019051400_all.deb ...
+Unpacking lsb-base (10.2019051400) ...
+Fetched 143 kB in 0s (1485 kB/s)
+Selecting previously unselected package cron.
+Preparing to unpack .../cron_3.0pl1-134+deb10u1_amd64.deb ...
+Unpacking cron (3.0pl1-134+deb10u1) ...
+Selecting previously unselected package sensible-utils.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 6829 files and directories currently installed.)
+Preparing to unpack .../sensible-utils_0.0.12_all.deb ...
+Unpacking sensible-utils (0.0.12) ...
+Setting up lsb-base (10.2019051400) ...
+Setting up sensible-utils (0.0.12) ...
+Setting up cron (3.0pl1-134+deb10u1) ...
+Selecting previously unselected package lsb-base.
+Preparing to unpack .../lsb-base_10.2019051400_all.deb ...
+Unpacking lsb-base (10.2019051400) ...
+Selecting previously unselected package cron.
+Preparing to unpack .../cron_3.0pl1-134+deb10u1_amd64.deb ...
+Unpacking cron (3.0pl1-134+deb10u1) ...
+Adding group `crontab' (GID 101) ...
+Done.
+Setting up lsb-base (10.2019051400) ...
+Setting up sensible-utils (0.0.12) ...
+Setting up cron (3.0pl1-134+deb10u1) ...
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Adding group `crontab' (GID 101) ...
+Done.
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Removing intermediate container 6596d55b4a8a
+ ---> 6cc7fb5f00c8
+Step 4/5 : COPY entrypoint.sh /entrypoint.sh
+Removing intermediate container 5363760b6d5a
+ ---> f76d812142bc
+Step 4/5 : COPY entrypoint.sh /entrypoint.sh
+ ---> 6d9203410a87
+Step 5/5 : ENTRYPOINT ["/entrypoint.sh"]
+ ---> Running in 49211e4a80a9
+ ---> 6e54fe46514f
+Step 5/5 : ENTRYPOINT ["/entrypoint.sh"]
+ ---> Running in 07ac856702c3
+Removing intermediate container 49211e4a80a9
+ ---> 9eee0e1e75ab
+
+Successfully built 9eee0e1e75ab
+Successfully tagged sentry-cleanup-onpremise-local:latest
+Building sentry-cleanup                     ... done
+Removing intermediate container 07ac856702c3
+ ---> b0f102b28e34
+
+Successfully built b0f102b28e34
+Successfully tagged snuba-cleanup-onpremise-local:latest
+Building snuba-cleanup                      ... done
+
+Docker images built.
+Removing network onpremise_default
+Network onpremise_default not found.
+Removing network sentry_onpremise_default
+Network sentry_onpremise_default not found.
+Creating network "sentry_onpremise_default" with the default driver
+Creating volume "sentry_onpremise_sentry-secrets" with default driver
+Creating volume "sentry_onpremise_sentry-smtp" with default driver
+Creating volume "sentry_onpremise_sentry-zookeeper-log" with default driver
+Creating volume "sentry_onpremise_sentry-kafka-log" with default driver
+Creating volume "sentry_onpremise_sentry-smtp-log" with default driver
+Creating volume "sentry_onpremise_sentry-clickhouse-log" with default driver
+Creating sentry_onpremise_zookeeper_run ... 
+Creating sentry_onpremise_zookeeper_run ... done
+Bootstrapping and migrating Snuba...
+Creating sentry_onpremise_clickhouse_1 ... 
+Creating sentry_onpremise_redis_1      ... 
+Creating sentry_onpremise_zookeeper_1  ... 
+Creating sentry_onpremise_redis_1      ... done
+Creating sentry_onpremise_zookeeper_1  ... done
+Creating sentry_onpremise_kafka_1      ... 
+Creating sentry_onpremise_clickhouse_1 ... done
+Creating sentry_onpremise_kafka_1      ... done
+Creating sentry_onpremise_snuba-api_run ... 
+Creating sentry_onpremise_snuba-api_run ... done
++ '[' b = - ']'
++ snuba bootstrap --help
++ set -- snuba bootstrap --no-migrate --force
++ set gosu snuba snuba bootstrap --no-migrate --force
++ exec gosu snuba snuba bootstrap --no-migrate --force
+%3|1606244905.669|FAIL|rdkafka#producer-1| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 3ms in state CONNECT)
+2020-11-24 19:08:26,666 Connection to Kafka failed (attempt 0)
+Traceback (most recent call last):
+  File "/usr/src/snuba/snuba/cli/bootstrap.py", line 55, in bootstrap
+    client.list_topics(timeout=1)
+cimpl.KafkaException: KafkaError{code=_TRANSPORT,val=-195,str="Failed to get metadata: Local: Broker transport failure"}
+%3|1606244906.667|FAIL|rdkafka#producer-1| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 0ms in state CONNECT, 1 identical error(s) suppressed)
+%3|1606244907.671|FAIL|rdkafka#producer-2| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1606244908.670|FAIL|rdkafka#producer-2| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 0ms in state CONNECT, 1 identical error(s) suppressed)
+2020-11-24 19:08:28,672 Connection to Kafka failed (attempt 1)
+Traceback (most recent call last):
+  File "/usr/src/snuba/snuba/cli/bootstrap.py", line 55, in bootstrap
+    client.list_topics(timeout=1)
+cimpl.KafkaException: KafkaError{code=_TRANSPORT,val=-195,str="Failed to get metadata: Local: Broker transport failure"}
+%3|1606244909.674|FAIL|rdkafka#producer-3| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 1ms in state CONNECT)
+%3|1606244910.674|FAIL|rdkafka#producer-3| [thrd:kafka:9092/bootstrap]: kafka:9092/bootstrap: Connect to ipv4#172.18.0.5:9092 failed: Connection refused (after 0ms in state CONNECT, 1 identical error(s) suppressed)
+2020-11-24 19:08:30,675 Connection to Kafka failed (attempt 2)
+Traceback (most recent call last):
+  File "/usr/src/snuba/snuba/cli/bootstrap.py", line 55, in bootstrap
+    client.list_topics(timeout=1)
+cimpl.KafkaException: KafkaError{code=_TRANSPORT,val=-195,str="Failed to get metadata: Local: Broker transport failure"}
+2020-11-24 19:08:32,397 Topic events created
+2020-11-24 19:08:32,398 Topic event-replacements created
+2020-11-24 19:08:32,398 Topic snuba-commit-log created
+2020-11-24 19:08:32,398 Topic outcomes created
+2020-11-24 19:08:32,398 Topic cdc created
+2020-11-24 19:08:32,399 Topic ingest-sessions created
+2020-11-24 19:08:32,399 Topic errors-replacements created
+Creating sentry_onpremise_snuba-api_run ... 
+Creating sentry_onpremise_snuba-api_run ... done
++ '[' m = - ']'
++ snuba migrations --help
++ set -- snuba migrations migrate --force
++ set gosu snuba snuba migrations migrate --force
++ exec gosu snuba snuba migrations migrate --force
+Finished running migrations
+
+Creating additional Kafka topics...
+Creating sentry_onpremise_kafka_run ... 
+Creating sentry_onpremise_kafka_run ... done
+Created topic ingest-attachments.
+
+Creating additional Kafka topics...
+Creating sentry_onpremise_kafka_run ... 
+Creating sentry_onpremise_kafka_run ... done
+Created topic ingest-transactions.
+
+Creating additional Kafka topics...
+Creating sentry_onpremise_kafka_run ... 
+Creating sentry_onpremise_kafka_run ... done
+Created topic ingest-events.
+
+
+Setting up database...
+Creating sentry_onpremise_symbolicator_1 ... 
+Creating sentry_onpremise_postgres_1     ... 
+Creating sentry_onpremise_memcached_1    ... 
+Creating sentry_onpremise_smtp_1         ... 
+Creating sentry_onpremise_snuba-outcomes-consumer_1 ... 
+Creating sentry_onpremise_snuba-consumer_1          ... 
+Creating sentry_onpremise_snuba-replacer_1          ... 
+Creating sentry_onpremise_snuba-sessions-consumer_1 ... 
+Creating sentry_onpremise_snuba-api_1               ... 
+Creating sentry_onpremise_snuba-transactions-consumer_1 ... 
+Creating sentry_onpremise_memcached_1                   ... done
+Creating sentry_onpremise_symbolicator_1                ... done
+Creating sentry_onpremise_postgres_1                    ... done
+Creating sentry_onpremise_smtp_1                        ... done
+Creating sentry_onpremise_snuba-consumer_1              ... done
+Creating sentry_onpremise_snuba-api_1                   ... done
+Creating sentry_onpremise_snuba-outcomes-consumer_1     ... done
+Creating sentry_onpremise_snuba-transactions-consumer_1 ... done
+Creating sentry_onpremise_snuba-sessions-consumer_1     ... done
+Creating sentry_onpremise_snuba-replacer_1              ... done
+Creating sentry_onpremise_web_run                       ... 
+Creating sentry_onpremise_web_run                       ... done
+19:09:04 [WARNING] sentry.utils.geo: settings.GEOIP_PATH_MMDB not configured.
+/usr/local/lib/python2.7/site-packages/OpenSSL/crypto.py:12: CryptographyDeprecationWarning: Python 2 is no longer supported by the Python core team. Support for it is now deprecated in cryptography, and will be removed in a future release.
+  from cryptography import x509
+19:09:13 [INFO] sentry.plugins.github: apps-not-configured
+[36;1mOperations to perform:[0m
+[1m  Apply all migrations: [0madmin, auth, contenttypes, jira_ac, nodestore, sentry, sessions, sites, social_auth
+[36;1mRunning migrations:[0m
+  Applying sentry.0001_initial...[32;1m OK[0m
+  Applying contenttypes.0001_initial...[32;1m OK[0m
+  Applying admin.0001_initial...[32;1m OK[0m
+  Applying admin.0002_logentry_remove_auto_add...[32;1m OK[0m
+  Applying contenttypes.0002_remove_content_type_name...[32;1m OK[0m
+  Applying auth.0001_initial...[32;1m OK[0m
+  Applying auth.0002_alter_permission_name_max_length...[32;1m OK[0m
+  Applying auth.0003_alter_user_email_max_length...[32;1m OK[0m
+  Applying auth.0004_alter_user_username_opts...[32;1m OK[0m
+  Applying auth.0005_alter_user_last_login_null...[32;1m OK[0m
+  Applying auth.0006_require_contenttypes_0002...[32;1m OK[0m
+  Applying auth.0007_alter_validators_add_error_messages...[32;1m OK[0m
+  Applying auth.0008_alter_user_username_max_length...[32;1m OK[0m
+  Applying jira_ac.0001_initial...[32;1m OK[0m
+  Applying nodestore.0001_initial...[32;1m OK[0m
+  Applying sentry.0002_912_to_recent...[32;1m OK[0m
+  Applying sentry.0003_auto_20191022_0122...[32;1m OK[0m
+  Applying sentry.0004_bitfieldtestmodel_blankjsonfieldtestmodel_callabledefaultmodel_jsonfieldtestmodel_jsonfieldwithdefau...[32;1m OK[0m
+  Applying sentry.0005_fix_content_types...[32;1m OK[0m
+  Applying sentry.0006_sentryapp_date_published...[32;1m OK[0m
+  Applying sentry.0007_auto_20191029_0131...[32;1m OK[0m
+  Applying sentry.0008_auto_20191030_0016...[32;1m OK[0m
+  Applying sentry.0009_auto_20191101_1608...[32;1m OK[0m
+  Applying sentry.0010_auto_20191104_1641...[32;1m OK[0m
+  Applying sentry.0011_remove_pagerdutyservice_service_id_from_state...[32;1m OK[0m
+  Applying sentry.0012_remove_pagerdutyservice_service_id...[32;1m OK[0m
+  Applying sentry.0013_auto_20191111_1829...[32;1m OK[0m
+  Applying sentry.0014_delete_sentryappwebhookerror...[32;1m OK[0m
+  Applying sentry.0015_delete_sentryappwebhookerror_db...[32;1m OK[0m
+  Applying sentry.0016_delete_alert_rule_deprecated_fields...[32;1m OK[0m
+  Applying sentry.0017_incident_aggregation...[32;1m OK[0m
+  Applying sentry.0018_discoversavedquery_version...[32;1m OK[0m
+  Applying sentry.0019_auto_20191114_2040...[32;1m OK[0m
+  Applying sentry.0020_auto_20191125_1420...[32;1m OK[0m
+  Applying sentry.0021_auto_20191203_1803...[32;1m OK[0m
+  Applying sentry.0021_auto_20191202_1716...[32;1m OK[0m
+  Applying sentry.0022_merge...[32;1m OK[0m
+  Applying sentry.0023_hide_environment_none_20191126...[32;1m OK[0m
+  Applying sentry.0024_auto_20191230_2052...Nothing to do, skipping migration.
+
+[32;1m OK[0m
+  Applying sentry.0025_organizationaccessrequest_requester...[32;1m OK[0m
+  Applying sentry.0026_delete_event...[32;1m OK[0m
+  Applying sentry.0027_exporteddata...[32;1m OK[0m
+  Applying sentry.0028_user_reports...[32;1m OK[0m
+  Applying sentry.0029_discover_query_upgrade...[32;1m OK[0m
+  Applying sentry.0030_auto_20200201_0039...[32;1m OK[0m
+  Applying sentry.0031_delete_alert_rules_and_incidents...[32;1m OK[0m
+  Applying sentry.0032_delete_alert_email...[32;1m OK[0m
+  Applying sentry.0033_auto_20200210_2137...[32;1m OK[0m
+  Applying sentry.0034_auto_20200210_2311...[32;1m OK[0m
+  Applying sentry.0035_auto_20200127_1711...[32;1m OK[0m
+  Applying sentry.0036_auto_20200213_0106...[32;1m OK[0m
+  Applying sentry.0037_auto_20200213_0140...[32;1m OK[0m
+  Applying sentry.0038_auto_20200213_1904...[32;1m OK[0m
+  Applying sentry.0039_delete_incidentsuspectcommit...[32;1m OK[0m
+  Applying sentry.0040_remove_incidentsuspectcommittable...[32;1m OK[0m
+  Applying sentry.0041_incidenttrigger_date_modified...[32;1m OK[0m
+  Applying sentry.0042_auto_20200214_1607...[32;1m OK[0m
+  Applying sentry.0043_auto_20200218_1903...[32;1m OK[0m
+  Applying sentry.0044_auto_20200219_0018...[32;1m OK[0m
+  Applying sentry.0045_remove_incidentactivity_event_stats_snapshot...[32;1m OK[0m
+  Applying sentry.0046_auto_20200221_1735...[32;1m OK[0m
+  Applying sentry.0047_auto_20200224_2319...[32;1m OK[0m
+  Applying sentry.0048_auto_20200302_1825...[32;1m OK[0m
+  Applying sentry.0049_auto_20200304_0254...[32;1m OK[0m
+  Applying sentry.0050_auto_20200306_2346...[32;1m OK[0m
+  Applying sentry.0051_fix_auditlog_pickled_data...[32;1m OK[0m
+  Applying sentry.0052_organizationonboardingtask_completion_seen...[32;1m OK[0m
+  Applying sentry.0053_migrate_alert_task_onboarding...[32;1m OK[0m
+  Applying sentry.0054_create_key_transaction...[32;1m OK[0m
+  Applying sentry.0055_query_subscription_status...[32;1m OK[0m
+  Applying sentry.0056_remove_old_functions...[32;1m OK[0m
+  Applying sentry.0057_remove_unused_project_flag...[32;1m OK[0m
+  Applying sentry.0058_project_issue_alerts_targeting...[32;1m OK[0m
+  Applying sentry.0059_add_new_sentry_app_features...[32;1m OK[0m
+  Applying sentry.0060_add_file_eventattachment_index...[32;1m OK[0m
+  Applying sentry.0061_alertrule_partial_index...[32;1m OK[0m
+  Applying sentry.0062_key_transactions_unique_with_owner...[32;1m OK[0m
+  Applying sentry.0063_drop_alertrule_constraint...[32;1m OK[0m
+  Applying sentry.0064_project_has_transactions...[32;1m OK[0m
+  Applying sentry.0065_add_incident_status_method...[32;1m OK[0m
+  Applying sentry.0066_alertrule_manager...[32;1m OK[0m
+  Applying sentry.0067_migrate_rules_alert_targeting...[32;1m OK[0m
+  Applying sentry.0068_project_default_flags...[32;1m OK[0m
+  Applying sentry.0069_remove_tracked_superusers...[32;1m OK[0m
+  Applying sentry.0070_incident_snapshot_support...[32;1m OK[0m
+  Applying sentry.0071_add_default_fields_model_subclass...[32;1m OK[0m
+  Applying sentry.0072_alert_rules_query_changes...[32;1m OK[0m
+  Applying sentry.0073_migrate_alert_query_model...[32;1m OK[0m
+  Applying sentry.0074_add_metric_alert_feature...[32;1m OK[0m
+  Applying sentry.0075_metric_alerts_fix_releases...[32;1m OK[0m
+  Applying sentry.0076_alert_rules_disable_constraints...[32;1m OK[0m
+  Applying sentry.0077_alert_query_col_drop_state...[32;1m OK[0m
+  Applying sentry.0078_incident_field_updates...[32;1m OK[0m
+  Applying sentry.0079_incidents_remove_query_field_state...[32;1m OK[0m
+  Applying sentry.0080_alert_rules_drop_unused_tables_cols...[32;1m OK[0m
+  Applying sentry.0081_add_integraiton_upgrade_audit_log...[32;1m OK[0m
+  Applying sentry.0082_alert_rules_threshold_float...[32;1m OK[0m
+  Applying sentry.0083_add_max_length_webhook_url...[32;1m OK[0m
+  Applying sentry.0084_exported_data_blobs...[32;1m OK[0m
+  Applying sentry.0085_fix_error_rate_snuba_query...[32;1m OK[0m
+  Applying sentry.0086_sentry_app_installation_for_provider...[32;1m OK[0m
+  Applying sentry.0087_fix_time_series_data_type...[32;1m OK[0m
+  Applying sentry.0088_rule_level_resolve_threshold_type...[32;1m OK[0m
+  Applying sentry.0089_rule_level_fields_backfill...[32;1m OK[0m
+  Applying sentry.0090_fix_auditlog_pickled_data_take_2...[32;1m OK[0m
+  Applying sentry.0091_alertruleactivity...[32;1m OK[0m
+  Applying sentry.0092_remove_trigger_threshold_type_nullable...[32;1m OK[0m
+  Applying sentry.0093_make_identity_user_id_textfield...[32;1m OK[0m
+  Applying sentry.0094_cleanup_unreferenced_event_files...[32;1m OK[0m
+  Applying sentry.0095_ruleactivity...[32;1m OK[0m
+  Applying sentry.0096_sentry_app_component_skip_load_on_open...[32;1m OK[0m
+  Applying sentry.0097_add_sentry_app_id_to_sentry_alertruletriggeraction...[32;1m OK[0m
+  Applying sentry.0098_add-performance-onboarding...[32;1m OK[0m
+  Applying sentry.0099_fix_project_platforms...[32;1m OK[0m
+  Applying sentry.0100_file_type_on_event_attachment...[32;1m OK[0m
+  Applying sentry.0101_backfill_file_type_on_event_attachment...[32;1m OK[0m
+  Applying sentry.0102_collect_relay_analytics...[32;1m OK[0m
+  Applying sentry.0103_project_has_alert_filters...[32;1m OK[0m
+  Applying sentry.0104_collect_relay_public_key_usage...[32;1m OK[0m
+  Applying sentry.0105_remove_nullability_of_event_attachment_type...[32;1m OK[0m
+  Applying sentry.0106_service_hook_project_id_nullable...[32;1m OK[0m
+  Applying sentry.0107_remove_spaces_from_slugs...[32;1m OK[0m
+  Applying sentry.0108_update_fileblob_action...[32;1m OK[0m
+  Applying sentry.0109_sentry_app_creator...[32;1m OK[0m
+  Applying sentry.0110_sentry_app_creator_backill...[32;1m OK[0m
+  Applying sentry.0111_snuba_query_event_type...[32;1m OK[0m
+  Applying sentry.0112_groupinboxmodel...[32;1m OK[0m
+  Applying sentry.0113_add_repositoryprojectpathconfig...[32;1m OK[0m
+  Applying sentry.0114_add_unhandled_savedsearch...[32;1m OK[0m
+  Applying sentry.0115_add_checksum_to_debug_file...[32;1m OK[0m
+  Applying sentry.0116_backfill_debug_file_checksum...[32;1m OK[0m
+  Applying sentry.0117_dummy-activityupdate...[32;1m OK[0m
+  Applying sentry.0118_backfill_snuba_query_event_types...[32;1m OK[0m
+  Applying sentry.0119_fix_set_none...[32;1m OK[0m
+  Applying sentry.0120_commit_author_charfield...[32;1m OK[0m
+  Applying sentry.0121_obliterate_group_inbox...                                                                                GroupInbox: 100% |#                                             | ETA:  --:--:--                                                                                GroupInbox: 100% |#                                             | ETA:  --:--:--
+[32;1m OK[0m
+  Applying sentry.0122_add_release_status...[32;1m OK[0m
+  Applying sentry.0123_groupinbox_addprojandorg...[32;1m OK[0m
+  Applying sentry.0124_add_release_status_model...[32;1m OK[0m
+  Applying sentry.0125_add_platformexternalissue_project_id...[32;1m OK[0m
+  Applying sentry.0126_make_platformexternalissue_group_id_flexfk...[32;1m OK[0m
+  Applying sentry.0127_backfill_platformexternalissue_project_id...[32;1m OK[0m
+  Applying sentry.0128_change_dashboards...[32;1m OK[0m
+  Applying sentry.0129_remove_dashboard_keys...[32;1m OK[0m
+  Applying sentry.0130_remove_old_widget_models...[32;1m OK[0m
+  Applying sentry.0131_drop_widget_tables...[32;1m OK[0m
+  Applying sentry.0132_groupownermodel...[32;1m OK[0m
+  Applying sentry.0133_dashboard_delete_object_status...[32;1m OK[0m
+  Applying sentry.0134_dashboard_drop_object_status_column...[32;1m OK[0m
+  Applying sentry.0135_removinguniquegroupownerconstraint...[32;1m OK[0m
+  Applying sessions.0001_initial...[32;1m OK[0m
+  Applying sites.0001_initial...[32;1m OK[0m
+  Applying sites.0002_alter_domain_unique...[32;1m OK[0m
+  Applying social_auth.0001_initial...[32;1m OK[0m
+19:12:45 [WARNING] sentry: Cannot initiate onboarding for organization (1) due to missing owners
+Created internal Sentry project (slug=internal, id=1)
+
+Would you like to create a user account now? [Y/n]: YYYY
+y
+y
+
+
+y
+
+
+
+Y
+
+
+
+
+
+
+
+
+Y
+Error: invalid input
+^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[A^[[AY
+Y
+
+Would you like to create a user account now? [Y/n]: 
+YEmail: 
+Error: Enter a valid email address.
+kalsigurbir@gmail                 gkalsi@redhat.com
+

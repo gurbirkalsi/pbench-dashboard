@@ -1,8 +1,16 @@
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 
 import { version } from '../package.json';
 import { getAppPath } from './utils/utils';
+
+Sentry.init({
+  dsn: process.sentry_dsn,
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0,
+});
 
 /*
  * redux persist configuration for saving state object to persisted storage.
