@@ -25,6 +25,7 @@ const { TabPane } = Tabs;
 
 @connect(({ datastore, global, dashboard, loading, user, auth }) => ({
   controllers: dashboard.controllers,
+  error: dashboard.error,
   indices: datastore.indices,
   selectedDateRange: global.selectedDateRange,
   favoriteControllers: user.favoriteControllers,
@@ -51,7 +52,7 @@ class Controllers extends Component {
       selectedDateRange.start === '' ||
       selectedDateRange.end === ''
     ) {
-      this.fetchMonthIndices();
+      this.fetchControllers();
     }
   }
 
@@ -155,7 +156,7 @@ class Controllers extends Component {
 
   render() {
     const { controllers } = this.state;
-    const { loadingControllers, favoriteControllers, auth } = this.props;
+    const { loadingControllers, favoriteControllers, auth, error } = this.props;
     const columns = [
       {
         title: 'Controller',
@@ -239,6 +240,7 @@ class Controllers extends Component {
                 </Form>
                 <Tabs type="card">
                   <TabPane tab="Controllers" key="controllers">
+                    <Text>{error}</Text>
                     <Table
                       style={{ marginTop: 20 }}
                       columns={columns}

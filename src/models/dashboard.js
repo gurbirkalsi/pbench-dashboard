@@ -12,6 +12,8 @@ import {
 import { insertTocTreeData } from '../utils/utils';
 import { generateSampleTable } from '../utils/parse';
 
+const CONTROLLERS_ERROR_MESSAGE = 'Error fetching controllers';
+
 export default {
   namespace: 'dashboard',
 
@@ -24,6 +26,7 @@ export default {
     tocResult: [],
     loading: false,
     clusters: {},
+    error: '',
   },
 
   effects: {
@@ -34,12 +37,19 @@ export default {
       });
     },
     *fetchControllers({ payload }, { call, put }) {
-      const controllers = yield call(queryControllers, payload);
+      try {
+        const controllers = yield call(queryControllers, payload);
 
-      yield put({
-        type: 'getControllers',
-        payload: controllers,
-      });
+        yield put({
+          type: 'GET_CONTROLLERS_SUCCESS',
+          payload: controllers,
+        });
+      } catch (error) {
+        yield put({
+          type: 'GET_CONTROLLERS_ERROR',
+          payload: CONTROLLERS_ERROR_MESSAGE,
+        });
+      }
     },
     *fetchResults({ payload }, { call, put }) {
       const response = yield call(queryResults, payload);
@@ -220,10 +230,16 @@ export default {
         ...payload,
       };
     },
-    getControllers(state, { payload }) {
+    GET_CONTROLLERS_SUCCESS(state, { payload }) {
       return {
         ...state,
         controllers: payload,
+      };
+    },
+    GET_CONTROLLERS_ERROR(state, { payload }) {
+      return {
+        ...state,
+        error: payload,
       };
     },
     getResults(state, { payload }) {
