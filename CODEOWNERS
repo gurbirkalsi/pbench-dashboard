@@ -1,0 +1,5 @@
+# These owners will be the default owners for GitHub workflows in
+# the repo. Unless a later match takes precedence,
+# @distributed-system-analysis/pbench-core will be requested for
+# review when someone opens a pull request.
+./github/workflows/ @distributed-system-analysis/pbench-core
